@@ -8,9 +8,9 @@ namespace machineConfig.Services
 {
     public sealed class GamesRepository 
     {
+        private GamesRepository() { }
         private static readonly Lazy<GamesRepository> lazy = new Lazy<GamesRepository>(() => new GamesRepository());
         public static GamesRepository Instance => lazy.Value;
-        private GamesRepository() { }
         private SQLiteConnection Connection => new SQLiteConnection("Data Source=data/games.db;Version=3;");
  
         public string CurrentGame

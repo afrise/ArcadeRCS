@@ -54,7 +54,7 @@ function AddGame() {
 
 function Post(url, data, onSuccess) {
 	var r = new XMLHttpRequest();
-	r.open("POST", url, true);
+	r.open("POST", "http://localhost/"+url, true);
     if (onSuccess != null) r.onreadystatechange = () => { setTimeout(onSuccess, 1); }
     if (data != null) r.send(data);
     else r.send();
