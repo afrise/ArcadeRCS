@@ -18,6 +18,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="utils\index.css" />
+    <None Remove="utils\index.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="utils\index.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="utils\index.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\js\index.js" />
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="Properties\PublishProfiles\FolderProfile.pubxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="utils\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ArcadeRCS Remote</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+    <div align="center" class="content">
+        <h1>ArcadeRCS</h1>
+        <h2>Select a game to boot:</h2>
+        <div class="list" id="gameList"></div>
+        <div class="addGame hiddenMenu" id="addGame">
+            <input id="name" class="text" type="text" placeholder="Game Name" />
+            <input id="cmd" class="text" type="text" placeholder="Game Command Line" />
+        </div>
+        <button onclick="AddGame()">Add new Game</button>
+        <button onclick="Reboot()">Reboot Cabinet</button>
+        <button onclick="SoftReboot()">Launch Game</button>
+        <script src="index.js"></script>
+    </div>
+</body>
+</html>

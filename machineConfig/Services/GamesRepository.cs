@@ -12,13 +12,21 @@ namespace machineConfig.Services
         public static GamesRepository Instance => lazy.Value;
         private GamesRepository() { }
         private SQLiteConnection Connection => new SQLiteConnection("Data Source=data/games.db;Version=3;");
-
+ 
         public string CurrentGame
         {
-            get => Connection.QuerySingle<string>("SELECT * FROM Games WHERE Selected=1");
+            get => Connection.QuerySingle<string>("SELECT GameName FROM Games WHERE Selected=1");
                         
             set => Connection.Execute("UPDATE Games SET Selected=0;UPDATE Games SET Selected=1 WHERE GameName=@name", 
                 new { name = value }); 
+        }
+
+        public string CurrentPath
+        {
+            get => Connection.QuerySingle<string>("SELECT Path FROM Games WHERE Selected=1");
+
+            set => Connection.Execute("UPDATE Games SET Selected=0;UPDATE Games SET Selected=1 WHERE GameName=@name",
+                new { name = value });
         }
 
         public List<Game> Games => 

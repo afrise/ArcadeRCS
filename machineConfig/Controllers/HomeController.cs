@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Diagnostics;
-using System.Linq;
 
 namespace machineConfig.Controllers
 {
@@ -17,15 +16,15 @@ namespace machineConfig.Controllers
         [HttpPost("SoftReboot")]
         public void SoftReboot()
         {
+            //all of this should be contained in the process manager
             try
             {
                 var p = new Process();
-                p.StartInfo.FileName = GamesRepository.Instance.Games
-                    .Where(g => g.GameName == GamesRepository.Instance.CurrentGame).First().Path;
-                p.Start();
+                p.StartInfo.FileName = GamesRepository.Instance.CurrentPath;
                 Console.WriteLine("Game Process Started.");
             }
             catch { Console.WriteLine("Error spawning game process, sorry kiddo."); }
+            //--------------------------------------------------------------
         }
     }
 }
