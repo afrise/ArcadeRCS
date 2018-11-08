@@ -1,0 +1,53 @@
+﻿body {
+    font-family: Arial;
+    background-color: slategrey;
+    color: white;
+}
+
+button {
+    background-color: darkslategray;
+    color: lightblue;
+    border-radius: 2px;
+    border-style:none;
+    padding: 9px 20px;
+    margin: 5px;
+    font-size:18px;
+}
+
+.text {
+    margin:5px;
+    padding:3px 15px;
+}
+
+.list {
+    width:80vw;
+    background-color: darkslategray;
+    border-radius:5px;
+    margin: 5px;
+}
+
+.listItem {
+    text-align:center;
+    font-size:20px;
+    padding: 10px;
+    width: 50vw;
+    display:inline-block;
+}
+.listOption {
+    display:inline-block;
+    width:10vw;
+}
+
+.listItemContainer {
+    position:relative;
+    width:80vw;
+    display:inline-block;
+}
+
+.listItemContainer:hover {
+    background-color: darkgreen;
+}
+
+.hiddenMenu {
+    display: none !important;
+}

@@ -1,20 +1,13 @@
-﻿<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="jumbotron">
-                <h2>
-                    Lightweight NetCore MVC Template
-                </h2>
-                <p>
-                    Created using .NET Core 2.0 MVC
-                </p>
+﻿<div align="center" class="content">
+            <h1>DDR Cabinet Configuration Tool</h1>
+            <h2>Select a game to boot:</h2>
+            <div class="list" id="gameList"></div>
+            <div class="addGame hiddenMenu" id="addGame">
+                <input id="name" class="text" type="text" placeholder="Game Name" />
+                <input id="cmd"  class="text" type="text" placeholder="Game Command Line" />
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <img src="https://i.imgur.com/hPauXQZ.jpg" />
-                </div>
-            </div>
+            <button onclick="AddGame()">Add new Game</button>
+            <button onclick="Reboot()">Reboot Cabinet</button>
+            <button onclick="SoftReboot()">Launch Game</button>
+            <script src="~/js/index.js"></script>
         </div>
-    </div>
-</div>
-
