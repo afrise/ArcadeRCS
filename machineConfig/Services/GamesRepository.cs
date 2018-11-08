@@ -6,49 +6,36 @@ using System.Linq;
 
 namespace machineConfig.Services
 {
-    public static class GamesRepository 
+    public sealed class GamesRepository 
     {
-        private static SQLiteConnection connection => new SQLiteConnection("Data Source=data/games.db;Version=3;");
-        public static string CurrentGame
+        private static readonly Lazy<GamesRepository> lazy = new Lazy<GamesRepository>(() => new GamesRepository());
+        public static GamesRepository Instance => lazy.Value;
+        private GamesRepository() { }
+        private SQLiteConnection Connection => new SQLiteConnection("Data Source=data/games.db;Version=3;");
+
+        public string CurrentGame
         {
-            get{
-                using (var db = connection) while (true) try {return db.QuerySingle<string>("SELECT * FROM Games WHERE Selected=1");}
-                        catch (Exception e){Console.WriteLine(e.Message);}}
-            set{
-                var success = false;
-                using (var db = connection) while (!success) try
-                        { db.Execute("UPDATE Games SET Selected=0;UPDATE Games SET Selected=1 WHERE GameName=@name", new { name = value }); success=true; }
-                        catch(Exception e) {Console.WriteLine(e.Message);}}
+            get => Connection.QuerySingle<string>("SELECT * FROM Games WHERE Selected=1");
+                        
+            set => Connection.Execute("UPDATE Games SET Selected=0;UPDATE Games SET Selected=1 WHERE GameName=@name", 
+                new { name = value }); 
         }
 
-        public static List<Game> Games
-        {
-            get
-            {
-                using (var db = connection) while (true) try
-                        { return db.Query<Game>("SELECT * FROM Games").ToList(); }
-                        catch(Exception e){ Console.WriteLine(e.Message); }
-            }
-        }
+        public List<Game> Games => 
+            Connection.Query<Game>("SELECT * FROM Games").ToList();
 
-        public static void WipeAndRefresh(){ //not calling this rn
-            using (var db = connection) {
-                 db.Execute("DROP TABLE Games");
-                 db.Execute("CREATE TABLE Games (GameName VARCHAR(200), Path VARCHAR(400), Selected BIT)");
-                 db.Execute("INSERT INTO Games VALUES('Default(Microsoft Paint)', 'mspaint.exe', 1)");
-            }
-        }//if it doesn't work, oh well.
+        public void WipeAndRefresh() =>
+            Connection.Execute("DROP TABLE Games" + 
+                               "CREATE TABLE Games (GameName VARCHAR(200), Path VARCHAR(400), Selected BIT)" +
+                               "INSERT INTO Games VALUES('Default(Microsoft Paint)', 'mspaint.exe', 1)");
+        
+        public void AddGame(string name, string path) => 
+            Connection.Execute("INSERT INTO Games VALUES (@name, @path, 0)", 
+                                new { name, path });
 
-        public static void AddGame(string name, string path) {
-            var success = false;
-            while (!success) using (var db = connection) try { db.Execute("INSERT INTO Games VALUES (@name, @path, 0)", new { name, path }); success=true; }
-                    catch(Exception e) { Console.WriteLine(e.Message); } }
-
-        public static void RemoveGame(string name) {
-            var success = false;
-            while (!success) using (var db = connection) try { db.Execute("DELETE FROM Games WHERE GameName=@name", new { name });success=true; }
-                    catch (Exception e){ Console.WriteLine(e.Message); };
-        }
+        public void RemoveGame(string name) => 
+            Connection.Execute("DELETE FROM Games WHERE GameName=@name", 
+                                new { name }); 
     }
     
     public class Game
